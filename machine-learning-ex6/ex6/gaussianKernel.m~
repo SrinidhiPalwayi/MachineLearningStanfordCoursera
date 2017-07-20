@@ -19,7 +19,7 @@ sim = 0;
 dif = x1 - x2;
 square = dif.^2;
 sum = square' * ones(size(x1));
-sim = exp(-sum/(2*sigma.^2));
+sim = exp(-sum/(@
 
 
 

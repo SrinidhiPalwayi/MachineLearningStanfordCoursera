@@ -29,14 +29,42 @@ in3 = 0.03;
 holder = 10000000; 
 cholder1 = 0.01;
 cholder3 = 0.03
-x1 = [1 2 1]; x2 = [0 4 -1]; 
+cfinal = 0;
+sigmafinal =0;
+
 for c = 1:5
     for r = 1:5
-         model = svmTrain(X, y, cholder1, @(x1, x2) gaussianKernel(x1, x2, in1));
+         model= svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma))
          pred = svmPredict(X, model);
-         error = mean(double(predictions ~=yval));
+         error = mean(double(pred ~=yval));
+         if error < holder 
+           holder = error;
+           sigmafinal = in1;
+           cfinal = cholder1;
+         end
+         in1 = in1 * 10;
+         
+         
     end
+    for r = 1:5
+         model = svmTrain(X, y, cholder3, @(x1, x2) gaussianKernel(x1, x2, in3));
+         pred = svmPredict(X, model);
+         error = mean(double(pred ~=yval));
+         if error < holder 
+           holder = error;
+           sigmafinal = in3;
+           cfinal = cholder3;
+         end
+         in3 = in3 * 10;
+         
+         
+    end
+    
+    
 end
+
+C = cfinal;
+sigma = sigmafinal;
  
     
     

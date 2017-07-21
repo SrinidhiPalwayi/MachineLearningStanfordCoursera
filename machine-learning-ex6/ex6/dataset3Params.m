@@ -24,22 +24,40 @@ sigma = 0.3;
 %
 
 counter = 1;
-in1 = 0.01;
-in3 = 0.03;
+CVals = [0.01; 0.03; 0.1; 0.3; 1; 3; 10; 30];
+sigmaVals = [0.01; 0.03; 0.1; 0.3; 1; 3; 10; 30];
+
 holder = 10000000; 
-cholder1 = 0.01;
-cholder3 = 0.03
-x1 = [1 2 1]; x2 = [0 4 -1]; 
-for c = 1:5
-    for r = 1:5
-         model = svmTrain(X, y, cholder1, @(x1, x2) gaussianKernel(x1, x2, in1));
-         pred = svmPredict(X, model);
+cfinal = 0;
+sigmafinal =0;
+disp(CVals(1));
+model = svmTrain(X, y, 0.01, @(x1, x2) gaussianKernel(x1, x2, 0.01));
+pred = svmPredict(model,X);
+%error = mean(double(pred ~=yval));
+%disp(error);
+
+for c = 1: size(CVals)
+    for r = 1: size(sigmaVals)
+
+         model = svmTrain(X, y, 0.01, @(x1, x2) gaussianKernel(x1, x2, 0.01));
+         
+         visualizeBoundary(X, y, model);
+         pred = svmPredict(model,Xval);
+         disp(size(pred));
+         disp(size(yval));
          error = mean(double(pred ~=yval));
          if error < holder 
-             
+           holder = error;
+           sigmafinal = sigmaVals(r);
+           cfinal = CVals(c);
+         end
          
     end
+      
 end
+
+C = cfinal;
+sigma = sigmafinal;
  
     
     

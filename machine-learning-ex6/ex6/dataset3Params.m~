@@ -34,10 +34,7 @@ for c = 1:5
     for r = 1:5
          model = svmTrain(X, y, cholder1, @(x1, x2) gaussianKernel(x1, x2, in1));
          pred = svmPredict(X, model);
-         error = mean(double(pred ~=yval));
-         if error < holder 
-             
-         
+         error = mean(double(predictions ~=yval));
     end
 end
  

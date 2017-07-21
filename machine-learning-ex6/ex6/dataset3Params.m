@@ -30,21 +30,19 @@ sigmaVals = [0.01; 0.03; 0.1; 0.3; 1; 3; 10; 30];
 holder = 10000000; 
 cfinal = 0;
 sigmafinal =0;
-disp(CVals(1));
-model = svmTrain(X, y, 0.01, @(x1, x2) gaussianKernel(x1, x2, 0.01));
-pred = svmPredict(model,X);
+
 %error = mean(double(pred ~=yval));
 %disp(error);
 
 for c = 1: size(CVals)
     for r = 1: size(sigmaVals)
 
-         model = svmTrain(X, y, 0.01, @(x1, x2) gaussianKernel(x1, x2, 0.01));
+         model = svmTrain(X, y, CVals(c), @(x1, x2) gaussianKernel(x1, x2, sigmaVals(r)));
          
          visualizeBoundary(X, y, model);
          pred = svmPredict(model,Xval);
-         disp(size(pred));
-         disp(size(yval));
+         %disp(size(pred));
+         %disp(size(yval));
          error = mean(double(pred ~=yval));
          if error < holder 
            holder = error;

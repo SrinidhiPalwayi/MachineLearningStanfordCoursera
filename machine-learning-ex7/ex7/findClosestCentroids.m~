@@ -7,8 +7,6 @@ function idx = findClosestCentroids(X, centroids)
 
 %X is 300 x 2
 
-%disp(X[0,1]);
-
 % Set K
 K = size(centroids, 1);
 
@@ -28,10 +26,10 @@ idx = zeros(size(X,1), 1);
 for o = 1:size(X)
     closest = [10000,0];
     for c = 1:K
-        distance = abs((centroids(c,:) - X(o,:)) * (centroids(c,:) - X(o,:))');
+        distance = abs(centroids(c) - X(o))^2;
         if (distance < closest(1))
             closest(1) = distance;
-            closest(2) = c;
+            closest(2) = centroids(c);
         end
     end
     idx(o) = closest(2);

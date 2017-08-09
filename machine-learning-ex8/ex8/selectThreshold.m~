@@ -30,22 +30,20 @@ for epsilon = min(pval):stepsize:max(pval)
 
 
     predictions = (pval < epsilon);
-    tp = sum(yval);
-    predictionsPos = sum(predictions);
-    fp = tp - predictionsPos;
+    wc = sum(yval) - sum(predictions); % wrongly classified
+    tp = sum(yval) - wc;
+    
+    fp = sum((predictions == 1) & (yval == 0));
+    
     prec = tp/(tp+fp);
     %all the negatives will be the size of the predictions minus the
     %postives 
     nega = length(predictions) - predictionsPos;
     [m,n] = size(yval);
-    negatives = (m - tp) - nega ;
+    fn = (m - tp) - nega ;
     %disp(size(negatives));
     
-    if negatives > 0
-        fn = negatives;
-    else 
-        fn = 0;
-    end
+  
     
     rec = tp/(tp+fn);
     

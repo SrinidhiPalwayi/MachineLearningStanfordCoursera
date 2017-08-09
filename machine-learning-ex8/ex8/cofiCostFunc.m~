@@ -44,16 +44,15 @@ Theta_grad = zeros(size(Theta));
 error_factor = ((X * Theta') - Y).* R;
 %J = sum(sum((error_factor).^2))/2;
 
-X_grad = (error_factor * Theta) + lambda * X;
+X_grad = (error_factor * Theta);
 
-Theta_grad = (error_factor'*X) + lambda * Theta;
+Theta_grad = (error_factor'*X);
 
 thetaReg = sum(sum(Theta.^2)) * lambda/2;
-disp(thetaReg);
 
 
 xReg = sum(sum(X.^2)) * lambda/2;
-J = sum(sum((error_factor).^2))/2 + thetaReg + xReg;
+J = sum(sum((error_factor).^2))/2 +
 
 
 
